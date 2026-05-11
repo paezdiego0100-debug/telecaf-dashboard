@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TELECAF — Dashboard de Tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg:        #0a0c0f;
+  --bg2:       #111318;
+  --bg3:       #181c23;
+  --border:    #1e2430;
+  --border2:   #2a3040;
+  --text:      #c8d0dc;
+  --text2:     #7a8799;
+  --text3:     #3d4a5c;
+  --accent:    #e85d00;
+  --accent2:   #ff7a1a;
+  --blue:      #1e6fd9;
+  --blue2:     #3a8ff5;
+  --green:     #1a7a45;
+  --green2:    #22a85e;
+  --amber:     #b87800;
+  --amber2:    #f0a020;
+  --red:       #9b1c1c;
+  --red2:      #e03535;
+  --mono:      'IBM Plex Mono', monospace;
+  --sans:      'IBM Plex Sans', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Scanline texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─ HEADER ─────────────────────────────────────────────────────────────────── */
+header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .15em;
+  color: var(--accent2);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232,93,0,.4); }
+  50%      { opacity: .7; box-shadow: 0 0 0 6px rgba(232,93,0,0); }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.timestamp {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.btn-refresh {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent2);
+  cursor: pointer;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-refresh:hover { background: var(--accent); color: #fff; }
+
+/* ─ LAYOUT ──────────────────────────────────────────────────────────────────── */
+.container { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; }
+
+/* ─ STATUS BAR ──────────────────────────────────────────────────────────────── */
+.status-bar {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: .6rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green2);
+  flex-shrink: 0;
+  animation: pulse-green 3s infinite;
+}
+@keyframes pulse-green {
+  0%,100% { opacity:1 }
+  50% { opacity:.4 }
+}
+
+.status-bar span { color: var(--text); font-weight: 500; }
+
+/* ─ MÉTRICAS PRINCIPALES ────────────────────────────────────────────────────── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.metric {
+  background: var(--bg2);
+  padding: 1.25rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.metric:hover::after { opacity: 1; }
+
+.metric-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: .5rem;
+}
+
+.metric-value {
+  font-family: var(--mono);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+}
+
+.metric.hero .metric-value {
+  font-size: 52px;
+  color: var(--accent2);
+}
+
+.metric-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: .4rem;
+}
+
+.metric-bar {
+  height: 3px;
+  background: var(--border2);
+  margin-top: .75rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+/* ─ GRID DE PANELES ─────────────────────────────────────────────────────────── */
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.panel {
+  background: var(--bg2);
+  padding: 1.25rem 1.5rem;
+}
+
+.panel.full { grid-column: 1 / -1; }
+.panel.tall { min-height: 320px; }
+
+.panel-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.panel-title::before {
+  content: '//';
+  color: var(--text3);
+}
+
+/* ─ BARRAS HORIZONTALES ──────────────────────────────────────────────────────── */
+.bar-list { display: flex; flex-direction: column; gap: 8px; }
+
+.bar-item {
+  display: grid;
+  grid-template-columns: 200px 1fr 50px;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  height: 6px;
+  background: var(--bg3);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 1px;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+.bar-fill.blue  { background: var(--blue2); }
+.bar-fill.green { background: var(--green2); }
+.bar-fill.amber { background: var(--amber2); }
+.bar-fill.red   { background: var(--red2); }
+
+.bar-count {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+/* ─ ESTADO PILLS ─────────────────────────────────────────────────────────────── */
+.estado-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.estado-pill {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: .75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+.estado-pill-name {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+
+.estado-pill-count {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.estado-pill.agendada .estado-pill-count { color: var(--blue2); }
+.estado-pill.asignada .estado-pill-count { color: var(--amber2); }
+.estado-pill.iniciada .estado-pill-count { color: var(--green2); }
+.estado-pill.suspendida .estado-pill-count { color: var(--red2); }
+.estado-pill.otros .estado-pill-count { color: var(--text2); }
+
+/* ─ TABLA ─────────────────────────────────────────────────────────────────────── */
+.tabla-wrap { overflow-x: auto; max-height: 400px; overflow-y: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+thead { position: sticky; top: 0; z-index: 10; }
+
+th {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border2);
+  padding: .5rem .75rem;
+  text-align: left;
+  color: var(--text2);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+td {
+  padding: .5rem .75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+tr:hover td { background: var(--bg3); }
+
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  border-radius: 2px;
+}
+
+.pill-agendada   { background: rgba(30,111,217,.2); color: var(--blue2); }
+.pill-asignada   { background: rgba(184,120,0,.2);  color: var(--amber2); }
+.pill-iniciada   { background: rgba(26,122,69,.2);  color: var(--green2); }
+.pill-suspendida { background: rgba(155,28,28,.2);  color: var(--red2); }
+.pill-alta       { background: rgba(232,93,0,.2);   color: var(--accent2); }
+.pill-media      { background: rgba(184,120,0,.15); color: var(--amber2); }
+.pill-baja       { background: rgba(30,111,217,.1); color: var(--blue2); }
+.pill-si         { background: rgba(232,93,0,.2);   color: var(--accent2); }
+
+/* ─ HISTORIAL CHART ─────────────────────────────────────────────────────────── */
+.chart-wrap {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+/* ─ FILTROS ──────────────────────────────────────────────────────────────────── */
+.filtros {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.filtro-select {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+}
+
+.filtro-select:focus { border-color: var(--accent); }
+
+/* ─ SEPARADOR ZONA ───────────────────────────────────────────────────────────── */
+.zona-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.zona-card {
+  background: var(--bg2);
+  padding: 1.25rem 1.5rem;
+}
+
+.zona-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: .75rem;
+}
+
+.zona-num {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.zona-num.red-zona  { color: var(--blue2); }
+.zona-num.imp-zona  { color: var(--amber2); }
+
+.zona-pct {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: .4rem;
+}
+
+/* ─ LOADING / ERROR ──────────────────────────────────────────────────────────── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 12px;
+  gap: .5rem;
+}
+
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-msg {
+  background: rgba(155,28,28,.15);
+  border: 1px solid var(--red2);
+  color: var(--red2);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+}
+
+/* ─ FOOTER ────────────────────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  margin-top: 1.5rem;
+  letter-spacing: .1em;
+}
+
+@media (max-width: 900px) {
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .panels { grid-template-columns: 1fr; }
+  .zona-split { grid-template-columns: 1fr; }
+  .bar-item { grid-template-columns: 130px 1fr 40px; }
+  .panel.full { grid-column: 1; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">TELECAF · Tickets Pendientes</div>
+  <div class="header-right">
+    <span class="timestamp" id="ts-header">Cargando...</span>
+    <button class="btn-refresh" onclick="cargarDatos()">↻ Actualizar</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span>Sistema:</span> sc.telecentro.net.ar &nbsp;|&nbsp;
+    <span>Empresa:</span> [Red] TELECAF S.A. &nbsp;|&nbsp;
+    <span>Última extracción:</span> <span id="ts-extraccion">—</span> &nbsp;|&nbsp;
+    <span>Próxima actualización:</span> <span id="ts-proxima">—</span>
+  </div>
+
+  <!-- MÉTRICAS PRINCIPALES -->
+  <div class="metrics-grid" id="metrics-grid">
+    <div class="loading"><div class="spinner"></div> Cargando datos...</div>
+  </div>
+
+  <!-- ZONAS -->
+  <div class="zona-split" id="zona-split" style="display:none">
+    <div class="zona-card">
+      <div class="zona-title">// RED NORTE-SUB01</div>
+      <div class="zona-num red-zona" id="z-red">—</div>
+      <div class="zona-pct" id="z-red-pct">—</div>
+    </div>
+    <div class="zona-card">
+      <div class="zona-title">// IMP NORTE-SUB01</div>
+      <div class="zona-num imp-zona" id="z-imp">—</div>
+      <div class="zona-pct" id="z-imp-pct">—</div>
+    </div>
+  </div>
+
+  <!-- ESTADOS + TIPIFICACIONES -->
+  <div class="panels" id="panels-row1" style="display:none">
+
+    <div class="panel">
+      <div class="panel-title">Estado de tickets</div>
+      <div class="estado-grid" id="estados-grid"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Prioridad</div>
+      <div class="bar-list" id="prioridad-list"></div>
+    </div>
+
+    <div class="panel full">
+      <div class="panel-title">Tipificaciones (top 15)</div>
+      <div class="bar-list" id="tipif-list"></div>
+    </div>
+
+  </div>
+
+  <!-- EVOLUCIÓN HISTÓRICA -->
+  <div class="panels" id="panel-historico" style="display:none">
+    <div class="panel full tall">
+      <div class="panel-title">Evolución histórica — tickets pendientes por día</div>
+      <div class="chart-wrap">
+        <canvas id="chart-historico" role="img" aria-label="Gráfico de línea mostrando evolución de tickets pendientes"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA DETALLE -->
+  <div class="panels" id="panel-tabla" style="display:none">
+    <div class="panel full">
+      <div class="panel-title">Detalle de tickets pendientes</div>
+      <div class="filtros">
+        <select class="filtro-select" id="f-estado" onchange="filtrarTabla()">
+          <option value="">Todos los estados</option>
+        </select>
+        <select class="filtro-select" id="f-zona" onchange="filtrarTabla()">
+          <option value="">Todas las zonas</option>
+          <option>RED NORTE-SUB01</option>
+          <option>IMP NORTE-SUB01</option>
+        </select>
+        <select class="filtro-select" id="f-prioridad" onchange="filtrarTabla()">
+          <option value="">Todas las prioridades</option>
+          <option>Alta</option>
+          <option>Media</option>
+          <option>Baja</option>
+        </select>
+        <select class="filtro-select" id="f-tipif" onchange="filtrarTabla()">
+          <option value="">Todas las tipificaciones</option>
+        </select>
+      </div>
+      <div class="tabla-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>N° Ticket</th>
+              <th>Nodo</th>
+              <th>SubZona</th>
+              <th>Prioridad</th>
+              <th>Afectación</th>
+              <th>Estado</th>
+              <th>Ticket Evento</th>
+              <th>Tipo Negocio</th>
+              <th>Tipificación</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body"></tbody>
+        </table>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:.75rem" id="tabla-count"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  TELECAF DASHBOARD · TELECAF S.A. · SISTEMA CONTRATISTAS TELECENTRO
+  &nbsp;·&nbsp; Datos extraídos automáticamente · No usar credenciales personales en repos públicos
+</footer>
+
+<script>
+let datosGlobal = null;
+let historialGlobal = [];
+let chartHistorico = null;
+
+// Colores para el chart
+const CHART_COLORS = {
+  total:     '#ff7a1a',
+  agendada:  '#3a8ff5',
+  asignada:  '#f0a020',
+  iniciada:  '#22a85e',
+  otros:     '#7a8799',
+};
+
+async function cargarDatos() {
+  try {
+    // Intentar cargar desde archivos de datos (GitHub Pages los sirve)
+    const [respUltimo, respHistorial] = await Promise.all([
+      fetch('./data/ultimo.json?_=' + Date.now()),
+      fetch('./data/historial.json?_=' + Date.now()),
+    ]);
+
+    if (!respUltimo.ok) throw new Error('No se encontró ultimo.json');
+
+    datosGlobal = await respUltimo.json();
+
+    try {
+      historialGlobal = await respHistorial.json();
+    } catch(e) {
+      historialGlobal = [];
+    }
+
+    renderDashboard();
+
+  } catch (err) {
+    // Modo demo: usar datos de ejemplo (para desarrollo)
+    console.warn('Usando datos demo:', err.message);
+    cargarDatosDEMO();
+  }
+}
+
+function cargarDatosDEMO() {
+  datosGlobal = {
+    fecha: new Date().toISOString().slice(0,10),
+    total: 286,
+    porEstado: {
+      'AGENDADA': 253,
+      'ASIGNADA': 31,
+      'INICIADA': 2,
+    },
+    porSubZona: {
+      'RED NORTE-SUB01': 222,
+      'IMP NORTE-SUB01': 64,
+    },
+    porPrioridad: {
+      'Alta': 8,
+      'Media': 45,
+      'Baja': 233,
+    },
+    porTipificacion: {
+      'Mantenimiento Preventivo de Red': 70,
+      'Acondicionamiento de Taps': 58,
+      'Preventivo de Energia en Fuente': 30,
+      'Cierre administrativo': 25,
+      'Verificacion de Puesta a Tierra': 24,
+      'Relevamiento/Correción de Infraestructura': 18,
+      'Reemplazo de Columna/Poste': 16,
+      'Aplomado de Columna/Poste': 7,
+      'Reforma TIPO C - con infraestructura': 6,
+      'Relevamiento de Anillo/Troncal': 5,
+      'Verificación de punto de corte': 5,
+      'Limpieza de Ingress en franja Horaria': 4,
+      'Otros': 18,
+    },
+    tickets: []
+  };
+  historialGlobal = [
+    { fecha:'2026-04-22', total:92, agendada:75, asignada:15, iniciada:2, imp:30, red:62 },
+    { fecha:'2026-04-29', total:147, agendada:120, asignada:24, iniciada:3, imp:45, red:102 },
+    { fecha:'2026-05-06', total:261, agendada:228, asignada:30, iniciada:3, imp:60, red:201 },
+    { fecha:'2026-05-08', total:286, agendada:253, asignada:31, iniciada:2, imp:64, red:222 },
+  ];
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const d = datosGlobal;
+  if (!d) return;
+
+  // Timestamp
+  const fechaStr = d.fecha ? new Date(d.fecha + 'T12:00:00').toLocaleDateString('es-AR', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric'
+  }) : '—';
+  document.getElementById('ts-header').textContent = fechaStr;
+  document.getElementById('ts-extraccion').textContent = fechaStr;
+
+  // Próxima actualización (8am o 2pm próximo)
+  const ahora = new Date();
+  const horas = ahora.getHours();
+  const prox = horas < 8 ? '8:00 AM' : horas < 14 ? '2:00 PM' : '8:00 AM (mañana)';
+  document.getElementById('ts-proxima').textContent = prox;
+
+  renderMetrics(d);
+  renderZonas(d);
+  renderEstados(d);
+  renderPrioridad(d);
+  renderTipificaciones(d);
+  renderHistorico();
+  renderTabla(d);
+
+  // Mostrar paneles
+  document.getElementById('zona-split').style.display = '';
+  document.getElementById('panels-row1').style.display = '';
+  document.getElementById('panel-historico').style.display = '';
+  document.getElementById('panel-tabla').style.display = '';
+
+  // Poblar filtros únicos
+  poblarFiltros(d);
+}
+
+function renderMetrics(d) {
+  const agendada  = d.porEstado['AGENDADA']  || 0;
+  const asignada  = d.porEstado['ASIGNADA']  || 0;
+  const iniciada  = d.porEstado['INICIADA']  || 0;
+  const otros     = d.total - agendada - asignada - iniciada;
+
+  document.getElementById('metrics-grid').innerHTML = `
+    <div class="metric hero">
+      <div class="metric-label">Total pendientes</div>
+      <div class="metric-value" id="anim-total">0</div>
+      <div class="metric-sub">tickets activos al ${d.fecha || '—'}</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Agendadas</div>
+      <div class="metric-value" style="color:var(--blue2)">${agendada}</div>
+      <div class="metric-bar"><div class="metric-bar-fill blue" style="width:${Math.round(agendada/d.total*100)}%;background:var(--blue2)"></div></div>
+      <div class="metric-sub">${Math.round(agendada/d.total*100)}% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Asignadas</div>
+      <div class="metric-value" style="color:var(--amber2)">${asignada}</div>
+      <div class="metric-bar"><div class="metric-bar-fill amber" style="width:${Math.round(asignada/d.total*100)}%;background:var(--amber2)"></div></div>
+      <div class="metric-sub">${Math.round(asignada/d.total*100)}% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Iniciadas</div>
+      <div class="metric-value" style="color:var(--green2)">${iniciada}</div>
+      <div class="metric-bar"><div class="metric-bar-fill green" style="width:${Math.round(iniciada/d.total*100+.5)}%;background:var(--green2)"></div></div>
+      <div class="metric-sub">${Math.round(iniciada/d.total*100)}% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Otros estados</div>
+      <div class="metric-value" style="color:var(--text2)">${otros > 0 ? otros : 0}</div>
+      <div class="metric-bar"><div class="metric-bar-fill" style="width:${Math.round((otros > 0 ? otros : 0)/d.total*100)}%;background:var(--text3)"></div></div>
+      <div class="metric-sub">suspendidas / pendientes</div>
+    </div>
+  `;
+
+  // Animar contador
+  animarContador('anim-total', d.total, 1200);
+}
+
+function animarContador(id, fin, dur) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let inicio = 0;
+  const step = dur / 60;
+  const inc = fin / 60;
+  const interval = setInterval(() => {
+    inicio = Math.min(inicio + inc, fin);
+    el.textContent = Math.round(inicio);
+    if (inicio >= fin) clearInterval(interval);
+  }, step);
+}
+
+function renderZonas(d) {
+  const red = d.porSubZona['RED NORTE-SUB01'] || 0;
+  const imp = d.porSubZona['IMP NORTE-SUB01'] || 0;
+  const tot = d.total;
+  document.getElementById('z-red').textContent = red;
+  document.getElementById('z-imp').textContent = imp;
+  document.getElementById('z-red-pct').textContent = `${Math.round(red/tot*100)}% del total`;
+  document.getElementById('z-imp-pct').textContent = `${Math.round(imp/tot*100)}% del total`;
+}
+
+function renderEstados(d) {
+  const mapa = {
+    'AGENDADA':              ['agendada',   d.porEstado['AGENDADA']   || 0],
+    'ASIGNADA':              ['asignada',   d.porEstado['ASIGNADA']   || 0],
+    'INICIADA':              ['iniciada',   d.porEstado['INICIADA']   || 0],
+    'SUSPENDIDA':            ['suspendida', d.porEstado['SUSPENDIDA'] || 0],
+    'PEND. AGENDAMIENTO':    ['otros',      d.porEstado['PENDIENTE AGENDAMIENTO'] || 0],
+    'PEND. ASIGNACIÓN':      ['otros',      d.porEstado['PENDIENTE ASIGNACION']   || 0],
+    'NO REALIZADA':          ['otros',      d.porEstado['NO REALIZADA'] || 0],
+  };
+  document.getElementById('estados-grid').innerHTML = Object.entries(mapa)
+    .map(([label, [cls, val]]) => `
+      <div class="estado-pill ${cls}">
+        <div class="estado-pill-name">${label}</div>
+        <div class="estado-pill-count">${val}</div>
+      </div>
+    `).join('');
+}
+
+function renderPrioridad(d) {
+  const items = Object.entries(d.porPrioridad || {}).sort((a,b) => b[1]-a[1]);
+  const max = Math.max(...items.map(i => i[1]), 1);
+  const clsMap = { 'Alta': 'red', 'Media': 'amber', 'Baja': 'blue' };
+  document.getElementById('prioridad-list').innerHTML = items.map(([k, v]) => `
+    <div class="bar-item">
+      <span class="bar-label">${k}</span>
+      <div class="bar-track">
+        <div class="bar-fill ${clsMap[k]||''}" style="width:${Math.round(v/max*100)}%"></div>
+      </div>
+      <span class="bar-count">${v}</span>
+    </div>
+  `).join('');
+}
+
+function renderTipificaciones(d) {
+  const items = Object.entries(d.porTipificacion || {})
+    .sort((a,b) => b[1]-a[1]).slice(0, 15);
+  const max = Math.max(...items.map(i => i[1]), 1);
+  document.getElementById('tipif-list').innerHTML = items.map(([k, v], i) => `
+    <div class="bar-item">
+      <span class="bar-label" title="${k}">${k}</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${Math.round(v/max*100)}%;opacity:${1 - i*0.04}"></div>
+      </div>
+      <span class="bar-count">${v}</span>
+    </div>
+  `).join('');
+}
+
+function renderHistorico() {
+  if (!historialGlobal.length) return;
+
+  const labels   = historialGlobal.map(h => {
+    const d = new Date(h.fecha + 'T12:00:00');
+    return d.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit' });
+  });
+  const total    = historialGlobal.map(h => h.total);
+  const agendada = historialGlobal.map(h => h.agendada || 0);
+  const asignada = historialGlobal.map(h => h.asignada || 0);
+
+  if (chartHistorico) chartHistorico.destroy();
+
+  const ctx = document.getElementById('chart-historico').getContext('2d');
+  chartHistorico = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Total',
+          data: total,
+          borderColor: '#ff7a1a',
+          backgroundColor: 'rgba(255,122,26,.08)',
+          borderWidth: 2,
+          fill: true,
+          tension: .4,
+          pointBackgroundColor: '#ff7a1a',
+          pointRadius: 4,
+        },
+        {
+          label: 'Agendadas',
+          data: agendada,
+          borderColor: '#3a8ff5',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          borderDash: [4, 3],
+          tension: .4,
+          pointRadius: 3,
+          pointBackgroundColor: '#3a8ff5',
+        },
+        {
+          label: 'Asignadas',
+          data: asignada,
+          borderColor: '#f0a020',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          borderDash: [2, 4],
+          tension: .4,
+          pointRadius: 3,
+          pointBackgroundColor: '#f0a020',
+        },
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#111318',
+          borderColor: '#1e2430',
+          borderWidth: 1,
+          titleColor: '#c8d0dc',
+          bodyColor: '#7a8799',
+          titleFont: { family: "'IBM Plex Mono'" },
+          bodyFont:  { family: "'IBM Plex Mono'", size: 11 },
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: '#1e2430' },
+          ticks: { color: '#7a8799', font: { family: "'IBM Plex Mono'", size: 10 } },
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: '#1e2430' },
+          ticks: { color: '#7a8799', font: { family: "'IBM Plex Mono'", size: 10 } },
+        }
+      }
+    }
+  });
+}
+
+function poblarFiltros(d) {
+  const estados = [...new Set((d.tickets||[]).map(t => t.estado))].filter(Boolean).sort();
+  const tipifs  = [...new Set((d.tickets||[]).map(t => t.tipificacion))].filter(Boolean).sort();
+  const selE = document.getElementById('f-estado');
+  const selT = document.getElementById('f-tipif');
+  selE.innerHTML = '<option value="">Todos los estados</option>' +
+    estados.map(e => `<option>${e}</option>`).join('');
+  selT.innerHTML = '<option value="">Todas las tipificaciones</option>' +
+    tipifs.map(t => `<option>${t}</option>`).join('');
+}
+
+function filtrarTabla() {
+  if (!datosGlobal) return;
+  const fE = document.getElementById('f-estado').value;
+  const fZ = document.getElementById('f-zona').value;
+  const fP = document.getElementById('f-prioridad').value;
+  const fT = document.getElementById('f-tipif').value;
+
+  let tickets = datosGlobal.tickets || [];
+  if (fE) tickets = tickets.filter(t => t.estado === fE);
+  if (fZ) tickets = tickets.filter(t => t.subZona === fZ);
+  if (fP) tickets = tickets.filter(t => t.prioridad === fP);
+  if (fT) tickets = tickets.filter(t => t.tipificacion === fT);
+
+  renderFilasTabla(tickets);
+}
+
+function renderTabla(d) {
+  renderFilasTabla(d.tickets || []);
+}
+
+function renderFilasTabla(tickets) {
+  const estado_cls = e => {
+    const m = { 'AGENDADA':'agendada','ASIGNADA':'asignada','INICIADA':'iniciada','SUSPENDIDA':'suspendida' };
+    return m[e] || '';
+  };
+  const prior_cls = p => ({ 'Alta':'alta', 'Media':'media', 'Baja':'baja' }[p] || '');
+
+  const tbody = document.getElementById('tabla-body');
+
+  if (!tickets.length) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:2rem;font-family:var(--mono);font-size:12px">Sin resultados</td></tr>`;
+    document.getElementById('tabla-count').textContent = '';
+    return;
+  }
+
+  tbody.innerHTML = tickets.slice(0, 500).map(t => `
+    <tr>
+      <td style="font-family:var(--mono);color:var(--accent2)">${t.nroTicket}</td>
+      <td>${t.nodo}</td>
+      <td style="color:var(--text2)">${t.subZona}</td>
+      <td><span class="pill pill-${prior_cls(t.prioridad)}">${t.prioridad}</span></td>
+      <td>${t.afectacion === 'SI' ? '<span class="pill pill-si">SI</span>' : t.afectacion}</td>
+      <td><span class="pill pill-${estado_cls(t.estado)}">${t.estado}</span></td>
+      <td style="font-family:var(--mono);font-size:10px;color:var(--text2)">${t.ticketEvento}</td>
+      <td style="color:var(--text2)">${t.tipoNegocio}</td>
+      <td>${t.tipificacion}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('tabla-count').textContent =
+    `Mostrando ${Math.min(tickets.length, 500)} de ${tickets.length} tickets`;
+}
+
+// Iniciar
+cargarDatos();
+
+// Auto-refresh cada 5 minutos
+setInterval(cargarDatos, 5 * 60 * 1000);
+</script>
+</body>
+</html>
