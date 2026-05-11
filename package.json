@@ -1,0 +1,21 @@
+{
+  "name": "telecaf-dashboard",
+  "version": "2.0.0",
+  "description": "Extractor automático de tickets pendientes — Sistema Contratistas Telecentro",
+  "main": "scraper.js",
+  "scripts": {
+    "start":    "node scraper.js",
+    "extraer":  "node scraper.js",
+    "local":    "HEADLESS=false node scraper.js",
+    "procesar": "node -e \"const {procesarCSV}=require('./procesar'); const f=process.argv[1]; procesarCSV(f, new Date().toISOString().slice(0,10), 0).catch(console.error)\" "
+  },
+  "dependencies": {
+    "playwright":         "^1.44.0",
+    "csv-parse":          "^5.5.5",
+    "googleapis":         "^140.0.0",
+    "google-auth-library": "^9.11.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
