@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-05-08",
+  "total": 286,
+  "totalWeb": 286,
+  "porEstado": {
+    "AGENDADA": 253,
+    "ASIGNADA": 31,
+    "INICIADA": 2
+  },
+  "porSubZona": {
+    "RED NORTE-SUB01": 222,
+    "IMP NORTE-SUB01": 64
+  },
+  "porPrioridad": {
+    "Alta": 8,
+    "Media": 45,
+    "Baja": 233
+  },
+  "porNegocio": {
+    "Preventivo": 209,
+    "Implementaciones": 64,
+    "Correctivo": 13
+  },
+  "porTipificacion": {
+    "Mantenimiento Preventivo de Red": 70,
+    "Acondicionamiento de Taps": 58,
+    "Preventivo de Energia en Fuente": 30,
+    "Cierre administrativo": 25,
+    "Verificacion de Puesta a Tierra": 24,
+    "Relevamiento/Correción de Infraestructura": 18,
+    "Reemplazo de Columna/Poste": 16,
+    "Aplomado de Columna/Poste": 7,
+    "Reforma TIPO C - con infraestructura": 6,
+    "Relevamiento de Anillo/Troncal": 5,
+    "Verificación de punto de corte": 5,
+    "Limpieza de Ingress en franja Horaria": 4,
+    "Relevamiento Inicial Leakage": 4,
+    "Completar fusiones en CE": 2,
+    "Otros": 12
+  },
+  "tickets": []
+}
