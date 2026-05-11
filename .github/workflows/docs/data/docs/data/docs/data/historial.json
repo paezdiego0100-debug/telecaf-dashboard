@@ -1,0 +1,6 @@
+[
+  {"fecha":"2026-04-22","total":92,"agendada":75,"asignada":15,"iniciada":2,"suspendida":0,"pendienteAgendamiento":0,"pendienteAsignacion":0,"noRealizada":0,"imp":30,"red":62},
+  {"fecha":"2026-04-29","total":147,"agendada":120,"asignada":24,"iniciada":3,"suspendida":0,"pendienteAgendamiento":0,"pendienteAsignacion":0,"noRealizada":0,"imp":45,"red":102},
+  {"fecha":"2026-05-06","total":261,"agendada":228,"asignada":30,"iniciada":3,"suspendida":0,"pendienteAgendamiento":0,"pendienteAsignacion":0,"noRealizada":0,"imp":60,"red":201},
+  {"fecha":"2026-05-08","total":286,"agendada":253,"asignada":31,"iniciada":2,"suspendida":0,"pendienteAgendamiento":0,"pendienteAsignacion":0,"noRealizada":0,"imp":64,"red":222}
+]
