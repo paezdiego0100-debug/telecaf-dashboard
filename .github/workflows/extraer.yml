@@ -1,0 +1,108 @@
+# .github/workflows/extraer.yml
+# Extrae tickets pendientes automáticamente y actualiza el dashboard
+
+name: Extraer Tickets Pendientes
+
+on:
+  # ── AUTOMÁTICO: dos veces por día (8am y 2pm hora Argentina, UTC-3) ────────
+  schedule:
+    - cron: '0 11 * * 1-5'   # 8am AR (lunes a viernes)
+    - cron: '0 17 * * 1-5'   # 2pm AR (lunes a viernes)
+  
+  # ── MANUAL: botón en GitHub Actions ────────────────────────────────────────
+  workflow_dispatch:
+    inputs:
+      motivo:
+        description: '¿Por qué corrés esto manualmente?'
+        required: false
+        default: 'Actualización manual'
+
+  # ── AUTOMÁTICO al hacer push (para testear) ─────────────────────────────────
+  push:
+    branches: [ main ]
+    paths:
+      - 'scraper.js'
+      - 'procesar.js'
+
+jobs:
+  extraer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # 1. Checkout del repositorio
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Instalar dependencias
+      - name: Instalar dependencias
+        run: npm ci
+
+      # 4. Instalar Playwright con Chromium
+      - name: Instalar Playwright (Chromium)
+        run: npx playwright install chromium --with-deps
+
+      # 5. Crear carpeta de datos
+      - name: Preparar carpeta de datos
+        run: mkdir -p datos
+
+      # 6. Restaurar historial previo (del artifact guardado)
+      - name: Restaurar historial
+        uses: actions/download-artifact@v4
+        with:
+          name: datos-historial
+          path: datos/
+        continue-on-error: true  # OK si es la primera vez
+
+      # 7. Correr el scraper
+      - name: Extraer tickets
+        env:
+          SC_USUARIO:   ${{ secrets.SC_USUARIO }}
+          SC_PASSWORD:  ${{ secrets.SC_PASSWORD }}
+          HEADLESS:     'true'
+          GOOGLE_SHEET_ID:              ${{ secrets.GOOGLE_SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON:  ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: node scraper.js
+
+      # 8. Copiar datos al dashboard web
+      - name: Copiar datos al dashboard
+        run: |
+          cp datos/ultimo.json docs/data/ultimo.json
+          cp datos/historial.json docs/data/historial.json
+
+      # 9. Publicar el dashboard en GitHub Pages
+      - name: Publicar dashboard (GitHub Pages)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          keep_files: true
+
+      # 10. Guardar historial como artifact para el próximo run
+      - name: Guardar historial
+        uses: actions/upload-artifact@v4
+        with:
+          name: datos-historial
+          path: datos/
+          retention-days: 365
+        if: always()
+
+      # 11. Notificar resultado
+      - name: Resumen
+        run: |
+          echo "### ✅ Extracción completada" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Campo | Valor |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Fecha | $(date '+%d/%m/%Y %H:%M') |" >> $GITHUB_STEP_SUMMARY
+          if [ -f datos/ultimo.json ]; then
+            TOTAL=$(node -e "console.log(require('./datos/ultimo.json').total)")
+            echo "| Total pendientes | **${TOTAL}** |" >> $GITHUB_STEP_SUMMARY
+          fi
