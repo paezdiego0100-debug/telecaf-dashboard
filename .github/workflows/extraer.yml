@@ -43,7 +43,7 @@ jobs:
 
       # 3. Instalar dependencias
       - name: Instalar dependencias
-        run: npm ci
+       run: npm install
 
       # 4. Instalar Playwright con Chromium
       - name: Instalar Playwright (Chromium)
