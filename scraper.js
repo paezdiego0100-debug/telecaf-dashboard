@@ -11,8 +11,8 @@ const { procesarCSV } = require('./procesar');
 const CONFIG = {
   url_login:   'https://sc.telecentro.net.ar/webs/logIn.php',
   url_tareas:  'https://sc.telecentro.net.ar/webs/tasks.php',
-  usuario:     process.env.SC_USUARIO     || 'user_ext_pamarilla',
-  password:    process.env.SC_PASSWORD    || '42824854',
+usuario:     process.env.SC_USUARIO     || '',
+password:    process.env.SC_PASSWORD    || '',
   empresa:     '[Red] TELECAF S.A.',
   // Estados que queremos capturar (todos los pendientes)
   estados_pendientes: [
