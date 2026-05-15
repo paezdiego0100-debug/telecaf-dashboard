@@ -127,7 +127,7 @@ async function procesarCSV(rutaCSV, fecha, totalWeb) {
   historial.sort((a, b) => a.fecha.localeCompare(b.fecha));
   fs.writeFileSync(historialPath, JSON.stringify(historial, null, 2));
   console.log('   ✅ JSON local guardado');
-
+await subirAGitHub();
   // ── Subir a Google Sheets ─────────────────────────────────────────────────
   try {
     await subirASheets(resultado, historial);
@@ -226,5 +226,15 @@ async function subirASheets(datos, historial) {
     requestBody: { values: [['Tipificacion', 'Cantidad'], ...tipifRows] },
   });
 }
-
+async function subirAGitHub() {
+  const { execSync } = require('child_process');
+  try {
+    execSync('git add docs/data/ultimo.json docs/data/historial.json', { cwd: __dirname });
+    execSync('git commit -m "Actualizar datos ' + new Date().toISOString().slice(0,10) + '"', { cwd: __dirname });
+    execSync('git push origin main', { cwd: __dirname });
+    console.log('   ✅ GitHub Pages actualizado');
+  } catch(e) {
+    console.log('   ℹ️  Sin cambios para subir a GitHub');
+  }
+}
 module.exports = { procesarCSV };
