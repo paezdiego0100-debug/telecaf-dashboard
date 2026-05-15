@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>TELECAF — Dashboard de Tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg:        #0a0c0f;
+  --bg2:       #111318;
+  --bg3:       #181c23;
+  --border:    #1e2430;
+  --border2:   #2a3040;
+  --text:      #c8d0dc;
+  --text2:     #7a8799;
+  --text3:     #3d4a5c;
+  --accent:    #e85d00;
+  --accent2:   #ff7a1a;
+  --blue:      #1e6fd9;
+  --blue2:     #3a8ff5;
+  --green:     #1a7a45;
+  --green2:    #22a85e;
+  --amber:     #b87800;
+  --amber2:    #f0a020;
+  --red:       #9b1c1c;
+  --red2:      #e03535;
+  --mono:      'IBM Plex Mono', monospace;
+  --sans:      'IBM Plex Sans', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Scanline texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─ HEADER ─────────────────────────────────────────────────────────────────── */
+header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .15em;
+  color: var(--accent2);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232,93,0,.4); }
+  50%      { opacity: .7; box-shadow: 0 0 0 6px rgba(232,93,0,0); }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.timestamp {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.btn-refresh {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent2);
+  cursor: pointer;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-refresh:hover { background: var(--accent); color: #fff; }
+
+/* ─ LAYOUT ──────────────────────────────────────────────────────────────────── */
+.container { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; }
+
+/* ─ STATUS BAR ──────────────────────────────────────────────────────────────── */
+.status-bar {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: .6rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green2);
+  flex-shrink: 0;
+  animation: pulse-green 3s infinite;
+}
+@keyframes pulse-green {
+  0%,100% { opacity:1 }
+  50% { opacity:.4 }
+}
+
+.status-bar span { color: var(--text); font-weight: 500; }
+
+/* ─ MÉTRICAS PRINCIPALES ────────────────────────────────────────────────────── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.metric {
+  background: var(--bg2);
+  padding: 1.25rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.metric:hover::after { opacity: 1; }
+
+.metric-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: .5rem;
+}
+
+.metric-value {
+  font-family: var(--mono);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+}
+
+.metric.hero .metric-value {
+  font-size: 52px;
+  color: var(--accent2);
+}
+
+.metric-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: .4rem;
+}
+
+.metric-bar {
+  height: 3px;
+  background: var(--border2);
+  margin-top: .75rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+/* ─ GRID DE PANELES ─────────────────────────────────────────────────────────── */
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.panel {
+  background: var(--bg2);
+  padding: 1.25rem 1.5rem;
+}
+
+.panel.full { grid-column: 1 / -1; }
+.panel.tall { min-height: 320px; }
+
+.panel-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.panel-title::before {
+  content: '//';
+  color: var(--text3);
+}
+
+/* ─ BARRAS HORIZONTALES ──────────────────────────────────────────────────────── */
+.bar-list { display: flex; flex-direction: column; gap: 8px; }
+
+.bar-item {
+  display: grid;
+  grid-template-columns: 200px 1fr 50px;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  height: 6px;
+  background: var(--bg3);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 1px;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+.bar-fill.blue  { background: var(--blue2); }
+.bar-fill.green { background: var(--green2); }
+.bar-fill.amber { background: var(--amber2); }
+.bar-fill.red   { background: var(--red2); }
+
+.bar-count {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+/* ─ ESTADO PILLS ─────────────────────────────────────────────────────────────── */
+.estado-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.estado-pill {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: .75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+.estado-pill-name {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+
+.estado-pill-count {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.estado-pill.agendada .estado-pill-count { color: var(--blue2); }
+.estado-pill.asignada .estado-pill-count { color: var(--amber2); }
+.estado-pill.iniciada .estado-pill-count { color: var(--green2); }
+.estado-pill.suspendida .estado-pill-count { color: var(--red2); }
+.estado-pill.otros .estado-pill-count { color: var(--text2); }
+
+/* ─ TABLA ─────────────────────────────────────────────────────────────────────── */
+.tabla-wrap { overflow-x: auto; max-height: 400px; overflow-y: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+thead { position: sticky; top: 0; z-index: 10; }
+
+th {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border2);
+  padding: .5rem .75rem;
+  text-align: left;
+  color: var(--text2);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+td {
+  padding: .5rem .75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+tr:hover td { background: var(--bg3); }
+
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  border-radius: 2px;
+}
+
+.pill-agendada   { background: rgba(30,111,217,.2); color: var(--blue2); }
+.pill-asignada   { background: rgba(184,120,0,.2);  color: var(--amber2); }
+.pill-iniciada   { background: rgba(26,122,69,.2);  color: var(--green2); }
+.pill-suspendida { background: rgba(155,28,28,.2);  color: var(--red2); }
+.pill-alta       { background: rgba(232,93,0,.2);   color: var(--accent2); }
+.pill-media      { background: rgba(184,120,0,.15); color: var(--amber2); }
+.pill-baja       { background: rgba(30,111,217,.1); color: var(--blue2); }
+.pill-si         { background: rgba(232,93,0,.2);   color: var(--accent2); }
+
+/* ─ HISTORIAL CHART ─────────────────────────────────────────────────────────── */
+.chart-wrap {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+/* ─ FILTROS ──────────────────────────────────────────────────────────────────── */
+.filtros {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.filtro-select {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+}
+
+.filtro-select:focus { border-color: var(--accent); }
+
+/* ─ SEPARADOR ZONA ───────────────────────────────────────────────────────────── */
+.zona-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.zona-card {
+  background: var(--bg2);
+  padding: 1.25rem 1.5rem;
+}
+
+.zona-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: .75rem;
+}
+
+.zona-num {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.zona-num.red-zona  { color: var(--blue2); }
+.zona-num.imp-zona  { color: var(--amber2); }
+
+.zona-pct {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: .4rem;
+}
+
+/* ─ LOADING / ERROR ──────────────────────────────────────────────────────────── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 12px;
+  gap: .5rem;
+}
+
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-msg {
+  background: rgba(155,28,28,.15);
+  border: 1px solid var(--red2);
+  color: var(--red2);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+}
+
+/* ─ FOOTER ────────────────────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  margin-top: 1.5rem;
+  letter-spacing: .1em;
+}
+
+@media (max-width: 900px) {
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .panels { grid-template-columns: 1fr; }
+  .zona-split { grid-template-columns: 1fr; }
+  .bar-item { grid-template-columns: 130px 1fr 40px; }
+  .panel.full { grid-column: 1; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><img src="data:image/png;base64,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" style="height:30px;width:30px;object-fit:contain;vertical-align:middle;margin-right:8px;border-radius:4px"> TELECAF · Tickets Pendientes</div>
+  <div class="header-right">
+    <span class="timestamp" id="ts-header">Cargando...</span>
+    <button class="btn-refresh" onclick="cargarDatos()">↻ Actualizar</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span>Sistema:</span> sc.telecentro.net.ar &nbsp;|&nbsp;
+    <span>Empresa:</span> [Red] TELECAF S.A. &nbsp;|&nbsp;
+    <span>Última extracción:</span> <span id="ts-extraccion">—</span> &nbsp;|&nbsp;
+    <span>Próxima actualización:</span> <span id="ts-proxima">—</span>
+  </div>
+
+  <!-- MÉTRICAS PRINCIPALES -->
+  <div class="metrics-grid" id="metrics-grid">
+    <div class="loading"><div class="spinner"></div> Cargando datos...</div>
+  </div>
+
+  <!-- ZONAS -->
+  <div class="zona-split" id="zona-split" style="display:none">
+    <div class="zona-card">
+      <div class="zona-title">// RED NORTE-SUB01</div>
+      <div class="zona-num red-zona" id="z-red">—</div>
+      <div class="zona-pct" id="z-red-pct">—</div>
+    </div>
+    <div class="zona-card">
+      <div class="zona-title">// IMP NORTE-SUB01</div>
+      <div class="zona-num imp-zona" id="z-imp">—</div>
+      <div class="zona-pct" id="z-imp-pct">—</div>
+    </div>
+  </div>
+
+  <!-- ESTADOS + TIPIFICACIONES -->
+  <div class="panels" id="panels-row1" style="display:none">
+
+    <div class="panel">
+      <div class="panel-title">Estado de tickets</div>
+      <div class="estado-grid" id="estados-grid"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Prioridad</div>
+      <div class="bar-list" id="prioridad-list"></div>
+    </div>
+
+    <div class="panel full">
+      <div class="panel-title">Tipificaciones (top 15)</div>
+      <div class="bar-list" id="tipif-list"></div>
+    </div>
+
+  </div>
+
+  <!-- EVOLUCIÓN HISTÓRICA -->
+  <div class="panels" id="panel-historico" style="display:none">
+    <div class="panel full tall">
+      <div class="panel-title">Evolución histórica — tickets pendientes por día</div>
+      <div class="chart-wrap">
+        <canvas id="chart-historico" role="img" aria-label="Gráfico de línea mostrando evolución de tickets pendientes"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA DETALLE -->
+  <div class="panels" id="panel-tabla" style="display:none">
+    <div class="panel full">
+      <div class="panel-title">Detalle de tickets pendientes</div>
+      <div class="filtros">
+        <select class="filtro-select" id="f-estado" onchange="filtrarTabla()">
+          <option value="">Todos los estados</option>
+        </select>
+        <select class="filtro-select" id="f-zona" onchange="filtrarTabla()">
+          <option value="">Todas las zonas</option>
+          <option>RED NORTE-SUB01</option>
+          <option>IMP NORTE-SUB01</option>
+        </select>
+        <select class="filtro-select" id="f-prioridad" onchange="filtrarTabla()">
+          <option value="">Todas las prioridades</option>
+          <option>Alta</option>
+          <option>Media</option>
+          <option>Baja</option>
+        </select>
+        <select class="filtro-select" id="f-tipif" onchange="filtrarTabla()">
+          <option value="">Todas las tipificaciones</option>
+        </select>
+      </div>
+      <div class="tabla-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>N° Ticket</th>
+              <th>Nodo</th>
+              <th>SubZona</th>
+              <th>Prioridad</th>
+              <th>Afectación</th>
+              <th>Estado</th>
+              <th>Ticket Evento</th>
+              <th>Tipo Negocio</th>
+              <th>Tipificación</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body"></tbody>
+        </table>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:.75rem" id="tabla-count"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  TELECAF DASHBOARD · TELECAF S.A. · SISTEMA CONTRATISTAS TELECENTRO
+  &nbsp;·&nbsp; Datos extraídos automáticamente · No usar credenciales personales en repos públicos
+</footer>
+
+<script>
+let datosGlobal = null;
+let historialGlobal = [];
+let chartHistorico = null;
+
+// Colores para el chart
+const CHART_COLORS = {
+  total:     '#ff7a1a',
+  agendada:  '#3a8ff5',
+  asignada:  '#f0a020',
+  iniciada:  '#22a85e',
+  otros:     '#7a8799',
+};
+
+async function cargarDatos() {
+  try {
+    // Intentar cargar desde archivos de datos (GitHub Pages los sirve)
+    const [respUltimo, respHistorial] = await Promise.all([
+      fetch((window.location.protocol==='file:'?'http://localhost:3000':'')+'/data/ultimo.json?_=' + Date.now()),
+      fetch((window.location.protocol==='file:'?'http://localhost:3000':'')+'/data/historial.json?_=' + Date.now()),
+    ]);
+
+    if (!respUltimo.ok) throw new Error('No se encontró ultimo.json');
+
+    datosGlobal = await respUltimo.json();
+
+    try {
+      historialGlobal = await respHistorial.json();
+    } catch(e) {
+      historialGlobal = [];
+    }
+
+    renderDashboard();
+
+  } catch (err) {
+    // Modo demo: usar datos de ejemplo (para desarrollo)
+    console.warn('Usando datos demo:', err.message);
+    cargarDatosDEMO();
+  }
+}
+
+function cargarDatosDEMO() {
+  datosGlobal = {
+    fecha: new Date().toISOString().slice(0,10),
+    total: 286,
+    porEstado: {
+      'AGENDADA': 253,
+      'ASIGNADA': 31,
+      'INICIADA': 2,
+    },
+    porSubZona: {
+      'RED NORTE-SUB01': 222,
+      'IMP NORTE-SUB01': 64,
+    },
+    porPrioridad: {
+      'Alta': 8,
+      'Media': 45,
+      'Baja': 233,
+    },
+    porTipificacion: {
+      'Mantenimiento Preventivo de Red': 70,
+      'Acondicionamiento de Taps': 58,
+      'Preventivo de Energia en Fuente': 30,
+      'Cierre administrativo': 25,
+      'Verificacion de Puesta a Tierra': 24,
+      'Relevamiento/Correción de Infraestructura': 18,
+      'Reemplazo de Columna/Poste': 16,
+      'Aplomado de Columna/Poste': 7,
+      'Reforma TIPO C - con infraestructura': 6,
+      'Relevamiento de Anillo/Troncal': 5,
+      'Verificación de punto de corte': 5,
+      'Limpieza de Ingress en franja Horaria': 4,
+      'Otros': 18,
+    },
+    tickets: []
+  };
+  historialGlobal = [
+    { fecha:'2026-04-22', total:92, agendada:75, asignada:15, iniciada:2, imp:30, red:62 },
+    { fecha:'2026-04-29', total:147, agendada:120, asignada:24, iniciada:3, imp:45, red:102 },
+    { fecha:'2026-05-06', total:261, agendada:228, asignada:30, iniciada:3, imp:60, red:201 },
+    { fecha:'2026-05-08', total:286, agendada:253, asignada:31, iniciada:2, imp:64, red:222 },
+  ];
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const d = datosGlobal;
+  if (!d) return;
+
+  // Timestamp
+  const fechaStr = d.fecha ? new Date(d.fecha + 'T12:00:00').toLocaleDateString('es-AR', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric'
+  }) : '—';
+  document.getElementById('ts-header').textContent = fechaStr;
+  document.getElementById('ts-extraccion').textContent = fechaStr;
+
+  // Próxima actualización (8am o 2pm próximo)
+  const ahora = new Date();
+  const horas = ahora.getHours();
+  const prox = horas < 8 ? '8:00 AM' : horas < 14 ? '2:00 PM' : '8:00 AM (mañana)';
+  document.getElementById('ts-proxima').textContent = prox;
+
+  renderMetrics(d);
+  renderZonas(d);
+  renderEstados(d);
+  renderPrioridad(d);
+  renderTipificaciones(d);
+  renderHistorico();
+  renderTabla(d);
+
+  // Mostrar paneles
+  document.getElementById('zona-split').style.display = '';
+  document.getElementById('panels-row1').style.display = '';
+  document.getElementById('panel-historico').style.display = '';
+  document.getElementById('panel-tabla').style.display = '';
+
+  // Poblar filtros únicos
+  poblarFiltros(d);
+}
+
+function renderMetrics(d) {
+  const agendada  = d.porEstado['AGENDADA']  || 0;
+  const asignada  = d.porEstado['ASIGNADA']  || 0;
+  const iniciada  = d.porEstado['INICIADA']  || 0;
+  const otros     = d.total - agendada - asignada - iniciada;
+
+  document.getElementById('metrics-grid').innerHTML = `
+    <div class="metric hero">
+      <div class="metric-label">Total pendientes</div>
+      <div class="metric-value" id="anim-total">0</div>
+      <div class="metric-sub">tickets activos al ${d.fecha || '—'}</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Agendadas</div>
+      <div class="metric-value" style="color:var(--blue2)">${agendada}</div>
+      <div class="metric-bar"><div class="metric-bar-fill blue" style="width:${Math.round(agendada/d.total*100)}%;background:var(--blue2)"></div></div>
+      <div class="metric-sub">${Math.round(agendada/d.total*100)}% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Asignadas</div>
+      <div class="metric-value" style="color:var(--amber2)">${asignada}</div>
+      <div class="metric-bar"><div class="metric-bar-fill amber" style="width:${Math.round(asignada/d.total*100)}%;background:var(--amber2)"></div></div>
+      <div class="metric-sub">${Math.round(asignada/d.total*100)}% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Iniciadas</div>
+      <div class="metric-value" style="color:var(--green2)">${iniciada}</div>
+      <div class="metric-bar"><div class="metric-bar-fill green" style="width:${Math.round(iniciada/d.total*100+.5)}%;background:var(--green2)"></div></div>
+      <div class="metric-sub">${Math.round(iniciada/d.total*100)}% del total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Otros estados</div>
+      <div class="metric-value" style="color:var(--text2)">${otros > 0 ? otros : 0}</div>
+      <div class="metric-bar"><div class="metric-bar-fill" style="width:${Math.round((otros > 0 ? otros : 0)/d.total*100)}%;background:var(--text3)"></div></div>
+      <div class="metric-sub">suspendidas / pendientes</div>
+    </div>
+  `;
+
+  // Animar contador
+  animarContador('anim-total', d.total, 1200);
+}
+
+function animarContador(id, fin, dur) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let inicio = 0;
+  const step = dur / 60;
+  const inc = fin / 60;
+  const interval = setInterval(() => {
+    inicio = Math.min(inicio + inc, fin);
+    el.textContent = Math.round(inicio);
+    if (inicio >= fin) clearInterval(interval);
+  }, step);
+}
+
+function renderZonas(d) {
+  const red = d.porSubZona['RED NORTE-SUB01'] || 0;
+  const imp = d.porSubZona['IMP NORTE-SUB01'] || 0;
+  const tot = d.total;
+  document.getElementById('z-red').textContent = red;
+  document.getElementById('z-imp').textContent = imp;
+  document.getElementById('z-red-pct').textContent = `${Math.round(red/tot*100)}% del total`;
+  document.getElementById('z-imp-pct').textContent = `${Math.round(imp/tot*100)}% del total`;
+}
+
+function renderEstados(d) {
+  const mapa = {
+    'AGENDADA':              ['agendada',   d.porEstado['AGENDADA']   || 0],
+    'ASIGNADA':              ['asignada',   d.porEstado['ASIGNADA']   || 0],
+    'INICIADA':              ['iniciada',   d.porEstado['INICIADA']   || 0],
+    'SUSPENDIDA':            ['suspendida', d.porEstado['SUSPENDIDA'] || 0],
+    'PEND. AGENDAMIENTO':    ['otros',      d.porEstado['PENDIENTE AGENDAMIENTO'] || 0],
+    'PEND. ASIGNACIÓN':      ['otros',      d.porEstado['PENDIENTE ASIGNACION']   || 0],
+    'NO REALIZADA':          ['otros',      d.porEstado['NO REALIZADA'] || 0],
+  };
+  document.getElementById('estados-grid').innerHTML = Object.entries(mapa)
+    .map(([label, [cls, val]]) => `
+      <div class="estado-pill ${cls}">
+        <div class="estado-pill-name">${label}</div>
+        <div class="estado-pill-count">${val}</div>
+      </div>
+    `).join('');
+}
+
+function renderPrioridad(d) {
+  const items = Object.entries(d.porPrioridad || {}).sort((a,b) => b[1]-a[1]);
+  const max = Math.max(...items.map(i => i[1]), 1);
+  const clsMap = { 'Alta': 'red', 'Media': 'amber', 'Baja': 'blue' };
+  document.getElementById('prioridad-list').innerHTML = items.map(([k, v]) => `
+    <div class="bar-item">
+      <span class="bar-label">${k}</span>
+      <div class="bar-track">
+        <div class="bar-fill ${clsMap[k]||''}" style="width:${Math.round(v/max*100)}%"></div>
+      </div>
+      <span class="bar-count">${v}</span>
+    </div>
+  `).join('');
+}
+
+function renderTipificaciones(d) {
+  const items = Object.entries(d.porTipificacion || {})
+    .sort((a,b) => b[1]-a[1]).slice(0, 15);
+  const max = Math.max(...items.map(i => i[1]), 1);
+  document.getElementById('tipif-list').innerHTML = items.map(([k, v], i) => `
+    <div class="bar-item">
+      <span class="bar-label" title="${k}">${k}</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${Math.round(v/max*100)}%;opacity:${1 - i*0.04}"></div>
+      </div>
+      <span class="bar-count">${v}</span>
+    </div>
+  `).join('');
+}
+
+function renderHistorico() {
+  if (!historialGlobal.length) return;
+
+  const labels   = historialGlobal.map(h => {
+    const d = new Date(h.fecha + 'T12:00:00');
+    return d.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit' });
+  });
+  const total    = historialGlobal.map(h => h.total);
+  const agendada = historialGlobal.map(h => h.agendada || 0);
+  const asignada = historialGlobal.map(h => h.asignada || 0);
+
+  if (chartHistorico) chartHistorico.destroy();
+
+  const ctx = document.getElementById('chart-historico').getContext('2d');
+  chartHistorico = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Total',
+          data: total,
+          borderColor: '#ff7a1a',
+          backgroundColor: 'rgba(255,122,26,.08)',
+          borderWidth: 2,
+          fill: true,
+          tension: .4,
+          pointBackgroundColor: '#ff7a1a',
+          pointRadius: 4,
+        },
+        {
+          label: 'Agendadas',
+          data: agendada,
+          borderColor: '#3a8ff5',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          borderDash: [4, 3],
+          tension: .4,
+          pointRadius: 3,
+          pointBackgroundColor: '#3a8ff5',
+        },
+        {
+          label: 'Asignadas',
+          data: asignada,
+          borderColor: '#f0a020',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          borderDash: [2, 4],
+          tension: .4,
+          pointRadius: 3,
+          pointBackgroundColor: '#f0a020',
+        },
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#111318',
+          borderColor: '#1e2430',
+          borderWidth: 1,
+          titleColor: '#c8d0dc',
+          bodyColor: '#7a8799',
+          titleFont: { family: "'IBM Plex Mono'" },
+          bodyFont:  { family: "'IBM Plex Mono'", size: 11 },
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: '#1e2430' },
+          ticks: { color: '#7a8799', font: { family: "'IBM Plex Mono'", size: 10 } },
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: '#1e2430' },
+          ticks: { color: '#7a8799', font: { family: "'IBM Plex Mono'", size: 10 } },
+        }
+      }
+    }
+  });
+}
+
+function poblarFiltros(d) {
+  const estados = [...new Set((d.tickets||[]).map(t => t.estado))].filter(Boolean).sort();
+  const tipifs  = [...new Set((d.tickets||[]).map(t => t.tipificacion))].filter(Boolean).sort();
+  const selE = document.getElementById('f-estado');
+  const selT = document.getElementById('f-tipif');
+  selE.innerHTML = '<option value="">Todos los estados</option>' +
+    estados.map(e => `<option>${e}</option>`).join('');
+  selT.innerHTML = '<option value="">Todas las tipificaciones</option>' +
+    tipifs.map(t => `<option>${t}</option>`).join('');
+}
+
+function filtrarTabla() {
+  if (!datosGlobal) return;
+  const fE = document.getElementById('f-estado').value;
+  const fZ = document.getElementById('f-zona').value;
+  const fP = document.getElementById('f-prioridad').value;
+  const fT = document.getElementById('f-tipif').value;
+
+  let tickets = datosGlobal.tickets || [];
+  if (fE) tickets = tickets.filter(t => t.estado === fE);
+  if (fZ) tickets = tickets.filter(t => t.subZona === fZ);
+  if (fP) tickets = tickets.filter(t => t.prioridad === fP);
+  if (fT) tickets = tickets.filter(t => t.tipificacion === fT);
+
+  renderFilasTabla(tickets);
+}
+
+function renderTabla(d) {
+  renderFilasTabla(d.tickets || []);
+}
+
+function renderFilasTabla(tickets) {
+  const estado_cls = e => {
+    const m = { 'AGENDADA':'agendada','ASIGNADA':'asignada','INICIADA':'iniciada','SUSPENDIDA':'suspendida' };
+    return m[e] || '';
+  };
+  const prior_cls = p => ({ 'Alta':'alta', 'Media':'media', 'Baja':'baja' }[p] || '');
+
+  const tbody = document.getElementById('tabla-body');
+
+  if (!tickets.length) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:2rem;font-family:var(--mono);font-size:12px">Sin resultados</td></tr>`;
+    document.getElementById('tabla-count').textContent = '';
+    return;
+  }
+
+  tbody.innerHTML = tickets.slice(0, 500).map(t => `
+    <tr>
+      <td style="font-family:var(--mono);color:var(--accent2)">${t.nroTicket}</td>
+      <td>${t.nodo}</td>
+      <td style="color:var(--text2)">${t.subZona}</td>
+      <td><span class="pill pill-${prior_cls(t.prioridad)}">${t.prioridad}</span></td>
+      <td>${t.afectacion === 'SI' ? '<span class="pill pill-si">SI</span>' : t.afectacion}</td>
+      <td><span class="pill pill-${estado_cls(t.estado)}">${t.estado}</span></td>
+      <td style="font-family:var(--mono);font-size:10px;color:var(--text2)">${t.ticketEvento}</td>
+      <td style="color:var(--text2)">${t.tipoNegocio}</td>
+      <td>${t.tipificacion}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('tabla-count').textContent =
+    `Mostrando ${Math.min(tickets.length, 500)} de ${tickets.length} tickets`;
+}
+
+// Iniciar
+cargarDatos();
+
+// Auto-refresh cada 5 minutos
+setInterval(cargarDatos, 5 * 60 * 1000);
+</script>
+</body>
+</html>
