@@ -1,0 +1,67 @@
+[
+  {
+    "fecha": "2026-05-11",
+    "total": 297,
+    "agendada": 265,
+    "asignada": 27,
+    "iniciada": 4,
+    "suspendida": 1,
+    "pendienteAgendamiento": 0,
+    "pendienteAsignacion": 0,
+    "noRealizada": 0,
+    "imp": 64,
+    "red": 233
+  },
+  {
+    "fecha": "2026-05-12",
+    "total": 286,
+    "agendada": 242,
+    "asignada": 42,
+    "iniciada": 2,
+    "suspendida": 0,
+    "pendienteAgendamiento": 0,
+    "pendienteAsignacion": 0,
+    "noRealizada": 0,
+    "imp": 64,
+    "red": 222
+  },
+  {
+    "fecha": "2026-05-13",
+    "total": 283,
+    "agendada": 241,
+    "asignada": 38,
+    "iniciada": 3,
+    "suspendida": 1,
+    "pendienteAgendamiento": 0,
+    "pendienteAsignacion": 0,
+    "noRealizada": 0,
+    "imp": 64,
+    "red": 219
+  },
+  {
+    "fecha": "2026-05-14",
+    "total": 279,
+    "agendada": 238,
+    "asignada": 38,
+    "iniciada": 3,
+    "suspendida": 0,
+    "pendienteAgendamiento": 0,
+    "pendienteAsignacion": 0,
+    "noRealizada": 0,
+    "imp": 64,
+    "red": 215
+  },
+  {
+    "fecha": "2026-05-15",
+    "total": 293,
+    "agendada": 263,
+    "asignada": 27,
+    "iniciada": 3,
+    "suspendida": 0,
+    "pendienteAgendamiento": 0,
+    "pendienteAsignacion": 0,
+    "noRealizada": 0,
+    "imp": 64,
+    "red": 229
+  }
+]
